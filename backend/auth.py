@@ -10,7 +10,7 @@ from flask import Flask, request, jsonify
 
 auth_ns=Namespace('auth', description='Authentication namespace')
 
-api = Api()
+#api = Api()
 
 signup_model=auth_ns.model(
     "Signup",
@@ -27,8 +27,6 @@ login_model=auth_ns.model(
         "password": fields.String()
     }
 )
-
-
 
 @auth_ns.route('/signup')
 class Signup(Resource):
