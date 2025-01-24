@@ -11,7 +11,7 @@ const NavBar = () => {
     <Navbar expanded={expanded} bg="dark" variant="dark" expand="lg" onToggle={() => setExpanded(!expanded)}>
       <Container>
         {/* Use Link for routing */}
-        <Navbar.Brand as={Link} to="/">Notes</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="me-auto">
