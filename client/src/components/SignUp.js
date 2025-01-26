@@ -6,20 +6,19 @@ import { useForm } from "react-hook-form";
 const SignUpPage = () => {
 
     const { register, watch, handleSubmit, reset, formState: { errors } } = useForm();
+    const [show, setShow]=useState(true);
+    const [sereverResponse, setServerResponse] = useState("")
 
     const submitForm = (data) => {
 
         if (data.password === data.confirmPassword) {
-            const body={
+            const body = {
                 username: data.username,
                 email: data.email,
                 password: data.password,
-                
-                
+
+
             }
-
-
-
             const requestOptions = {
                 method: "POST",
                 headers: {
@@ -29,16 +28,21 @@ const SignUpPage = () => {
             }
 
             fetch('/auth/signup', requestOptions)
-            .then(response => response.json())
-            .then(data=>console.log(data))
-            .catch(err=>console.error(err))
+                .then(res => res.json())
+                .then(data=>{
+                    setServerResponse(data.message)
+                    console.log(sereverResponse)
+
+                    setShow(true)
+                })
+                .catch(err => console.error(err))
 
             reset();
 
 
 
         }
-          else {
+        else {
             alert("Password do not match")
         }
 
@@ -49,7 +53,21 @@ const SignUpPage = () => {
     return (
         <div className="container">
             <div className="form">
+               {show?
+               <>
+               <Alert variant="success" onClose={() => setShow(false)} dismissible>
+
+<p>
+    {sereverResponse}
+</p>
+</Alert>
                 <h1>Sign Up Page</h1>
+                
+                </>
+                :
+                <h1>Sign Up PAge</h1>
+               }
+            
                 <form onSubmit={handleSubmit(submitForm)}>
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
