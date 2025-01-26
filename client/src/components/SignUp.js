@@ -1,14 +1,48 @@
-import React, {useState} from "react";
-import {Form, Button} from "react-bootstrap";
-
+import React, { useState } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const SignUpPage = () => {
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassowrd, setConfirmPassword] = useState("");
-    const submitForm = (e) => {
-        console.log("Form submitted");
+
+    const { register, watch, handleSubmit, reset, formState: { errors } } = useForm();
+
+    const submitForm = (data) => {
+
+        if (data.password === data.confirmPassword) {
+            const body={
+                username: data.username,
+                email: data.email,
+                password: data.password,
+                
+                
+            }
+
+
+
+            const requestOptions = {
+                method: "POST",
+                headers: {
+                    'content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }
+
+            fetch('/auth/signup', requestOptions)
+            .then(response => response.json())
+            .then(data=>console.log(data))
+            .catch(err=>console.error(err))
+
+            reset();
+
+
+
+        }
+          else {
+            alert("Password do not match")
+        }
+
+
     }
 
 
@@ -16,56 +50,70 @@ const SignUpPage = () => {
         <div className="container">
             <div className="form">
                 <h1>Sign Up Page</h1>
-                <form>
+                <form onSubmit={handleSubmit(submitForm)}>
                     <Form.Group>
                         <Form.Label>Username</Form.Label>
-                        <Form.Control type="text" 
-                        placeholder="Your username"
-                        value={username}
-                        name="username"
-                        onChange={(e) => {setUsername(e.target.value)}}
+                        <Form.Control type="text"
+                            placeholder="Your username"
+                            {...register("username", { required: true, maxLength: 25 })}
                         />
+
+                        {errors.username && <p style={{ color: "red" }}><small>Username is required</small></p>}
+                        {errors.username?.type === "maxLength" && <p style={{ color: "red" }}><small>Username should not exceed 25 characters</small></p>}
                     </Form.Group>
+
                     <br></br>
                     <Form.Group>
                         <Form.Label>Email</Form.Label>
-                        <Form.Control type="email" placeholder="Your email"
-                        value={email}
-                        name="email"
-                        onChange={(e) => {setEmail(e.target.value)}}
+                        <Form.Control type="email"
+                            placeholder="Your email"
+                            {...register("email", { required: true, maxLength: 80 })}
                         />
+
+                        {errors.email && <p style={{ color: "red" }}><small>Email is required</small></p>}
+
+                        {errors.email?.type === "maxLength" && <p style={{ color: "red" }}><small>Email should not exceed 80 characters</small></p>}
                     </Form.Group>
                     <br></br>
                     <Form.Group>
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Your password"
-                        value={password}
-                        name="password"
-                        onChange={(e) => {setPassword(e.target.value)}}
+                        <Form.Control type="password"
+                            placeholder="Your password"
+                            {...register("password", { required: true, minLength: 8 })}
                         />
+
+                        {errors.password && <p style={{ color: "red" }}><small>Password is required</small></p>}
+
+                        {errors.password?.type === "minLength" && <p style={{ color: "red" }}><small>Minimum length should be 8 characters</small></p>}
                     </Form.Group>
                     <br></br>
                     <Form.Group>
                         <Form.Label>Confirm Password</Form.Label>
-                        <Form.Control type="password" placeholder="Your password"
-                        value={confirmPassowrd}
-                        name="confirmPassword"
-                        onChange={(e) => {setConfirmPassword(e.target.value)}}
+                        <Form.Control type="password"
+                            placeholder="Confirm your password"
+                            {...register("confirmPassword", {
+                                required: true,
+                                minLength: 8,
+                                validate: value => value === watch("password") || "Passwords do not match"
+                            })}
                         />
+
+                        {errors.confirmPassword && <p style={{ color: "red" }}><small>Confirm Password is required</small></p>}
+
+                        {errors.confirmPassword?.type === "minLength" && <p style={{ color: "red" }}><small>Minimum length should be 8 characters</small></p>}
                     </Form.Group>
                     <br></br>
                     <Form.Group>
-                        <Button as="sub" variant="primary" onClick={submitForm}>SignUp</Button>
+                        <Button type="submit" variant="primary" onClick={handleSubmit(submitForm)}>SignUp</Button>
                     </Form.Group>
-                    
-
-
-
-
+                    <br />
+                    <Form.Group>
+                        <small>Already have an account?<Link to='/login'> Log In</Link></small>
+                    </Form.Group>
                 </form>
-
             </div>
         </div>
-    )
-}
-export default SignUpPage
+    );
+};
+
+export default SignUpPage;
