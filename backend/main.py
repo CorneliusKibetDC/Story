@@ -22,6 +22,10 @@ def create_app(config):
     api.add_namespace(notes_ns)  # Register the notes namespace
     api.add_namespace(auth_ns)  # Register the auth namespace
 
+    @app.route("/")
+    def index():
+        return app.send_static_file("index.html")
+
     @app.shell_context_processor
     def make_shell_context():
         return {
