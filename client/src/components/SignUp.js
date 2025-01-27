@@ -7,9 +7,10 @@ const SignUpPage = () => {
 
     const { register, watch, handleSubmit, reset, formState: { errors } } = useForm();
     const [show, setShow]=useState(true);
-    const [sereverResponse, setServerResponse] = useState("")
+    const [serverResponse, setServerResponse] = useState("")
 
     const submitForm = (data) => {
+
 
         if (data.password === data.confirmPassword) {
             const body = {
@@ -31,7 +32,7 @@ const SignUpPage = () => {
                 .then(res => res.json())
                 .then(data=>{
                     setServerResponse(data.message)
-                    console.log(sereverResponse)
+                    console.log(serverResponse)
 
                     setShow(true)
                 })
@@ -58,7 +59,7 @@ const SignUpPage = () => {
                <Alert variant="success" onClose={() => setShow(false)} dismissible>
 
 <p>
-    {sereverResponse}
+    {serverResponse}
 </p>
 </Alert>
                 <h1>Sign Up Page</h1>
