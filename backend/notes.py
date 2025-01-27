@@ -95,16 +95,16 @@ class HelloResource(Resource):
     def get(self):
         return {"message": "Hello, World!"}
 
-@notes_ns.route('/notes')
+@notes_ns.route('/')
 class NotesResource(Resource):
-    @notes_ns.marshal_with(notes_model, envelope="data")
+    @notes_ns.marshal_with(notes_model)
     def get(self):
         """Get all notes"""
         notes = Notes.query.all()
         return notes
 
     @notes_ns.expect(notes_model)
-    @notes_ns.marshal_with(notes_model, code=201)
+    @notes_ns.marshal_with(notes_model)
     @jwt_required()
     def post(self):
         """Create a new note"""
@@ -117,7 +117,7 @@ class NotesResource(Resource):
         new_note.save()  # Make sure the Notes model has a save() method
         return new_note, 201
 
-@notes_ns.route('/notes/<int:id>')
+@notes_ns.route('/note/<int:id>')
 class NoteResource(Resource):
     @notes_ns.marshal_with(notes_model)
     def get(self, id):
@@ -125,7 +125,7 @@ class NoteResource(Resource):
         note = Notes.query.get_or_404(id)
         return note
 
-    @notes_ns.expect(notes_model)
+    #@notes_ns.expect(notes_model)
     @notes_ns.marshal_with(notes_model)
     @jwt_required()
     def put(self, id):
@@ -138,6 +138,8 @@ class NoteResource(Resource):
         note_to_update.save()  # Make sure the Notes model has an update/save() method
         return note_to_update, 200
 
+    
+    @notes_ns.marshal_with(notes_model)
     @jwt_required()
     def delete(self, id):
         """Delete a note by ID"""

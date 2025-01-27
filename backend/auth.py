@@ -38,6 +38,8 @@ class Signup(Resource):
         data=request.get_json()
 
         username=data.get("username")
+        password=data.get("password")
+
 
         db_user=User.query.filter_by(username=username).first()
         if db_user is not None:
@@ -56,6 +58,7 @@ class Login(Resource):
     @auth_ns.expect(login_model)
     def post(self):
         data=request.get_json()
+
         username=data.get("username")
         password=data.get("password")
         
