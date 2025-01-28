@@ -31,11 +31,12 @@ const LoggedOutLink = () => {
         <Link className="nav-link" to="/signup">Sign Up</Link>
       </li>
       <li className="nav-item">
-        <Link className="nav-link" to="/login">Login</Link>
-      </li>
-      <li className="nav-item">
         <Link className="nav-link" to="/">Home</Link>
       </li>
+      <li className="nav-item">
+        <Link className="nav-link" to="/login">Login</Link>
+      </li>
+     
     </>
   );
 };
@@ -47,7 +48,7 @@ const NavBar = () => {
   return (
     <Navbar expanded={expanded} bg="dark" variant="dark" expand="lg" onToggle={() => setExpanded(!expanded)}>
       <Container>
-        <Navbar.Brand as={Link} to="/">Home</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Notes</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="me-auto">

@@ -1,12 +1,159 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from '../auth';
+import Note from './Note';
+import {Modal, Form, Button} from 'react-bootstrap';
+import { useForm } from "react-hook-form";
+
+
 
 
 const LoggedinHome=()=>{
+    const [notes,setNotes]=useState([]);
+    const [show, setShow] = useState(false);
+    const {register, handleSubmit,reset,setValue, formState:{ errors } }= useForm();
+    const[noteId,setNoteId]=useState(0)
+
+    useEffect(
+        ()=>{
+
+            fetch('/notes/notes')
+            .then((res) => res.json())
+            .then(data => {
+                setNotes(data)
+                
+            })
+            .catch(err=>console.log(err))
+        },[]
+    )
+    
+    const closeModal=()=>{
+      
+        setShow(false)
+    }
+    const showModal=(id)=>{
+        setNoteId(id)
+        
+        setShow(true)
+
+        notes.map(
+            (note)=>{
+                if (note.id===id){
+                    setValue('title',note.title)
+                    setValue('content',note.content)
+
+                }
+            }
+        )
+    }
+    const updateNote = (data) => {
+        console.log(data);
+    
+        // Retrieve and parse the token from localStorage
+        let token = localStorage.getItem('REACT_TOKEN_AUTH_KEY');
+        if (token) {
+            // Assuming the token is a JSON object with access_token and refresh_token fields
+            const parsedToken = JSON.parse(token);
+    
+            // Extract the access_token
+            const accessToken = parsedToken.access_token;
+    
+            // Log the access token (for debugging)
+            console.log('Access Token:', accessToken);
+    
+            // Setup request options with the access_token
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`  // Use access token
+                },
+                body: JSON.stringify(data),
+            };
+    
+            // Send the request to update the note
+            fetch(`/notes/note/${noteId}`, requestOptions)
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    const reload=window.location.reload();
+                    reload()
+                })
+                .catch((err) => console.log(err));
+        } else {
+            console.log('Token not found in localStorage');
+        }
+    };
+
+
     return (
-        <div className="notes">
+        <div className="notes container">
+            <Modal
+                show={show}
+                size="lg"
+                onHide={closeModal}
+>
+    <Modal.Header closeButton>
+        <Modal.Title>
+            Update Note
+        </Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+    <form>
+                <Form.Group>
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                        type="text"
+                        {...register("title", { required: true, maxLength: 25 })}
+                    />
+                </Form.Group>
+                {errors.title && <p style={{ color: 'red' }}><small>Title is required</small></p>}
+                {errors.title?.type === 'maxLength' && (
+                    <p style={{ color: 'red' }}>
+                        <small>Title should be less than 25 characters</small>
+                    </p>
+                )}
+
+                <Form.Group>
+                    <Form.Label>Content</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={10}
+                        {...register("content", { required: true, maxLength: 300 })}
+                    />
+                </Form.Group>
+                {errors.content && <p style={{ color: 'red' }}><small>Content is required</small></p>}
+                {errors.content?.type === 'maxLength' && (
+                    <p style={{ color: 'red' }}>
+                        <small>Content should be more than 300 characters</small>
+                    </p>
+                )}
+
+                <br />
+                <Form.Group>
+                    <Button
+                        variant="primary"
+                        onClick={handleSubmit(updateNote)} // Calls the createNote function on form submission
+                    >
+                        Save
+                    </Button>
+                </Form.Group>
+            </form>
+    </Modal.Body>
+            </Modal>
             <h1>Lists of notes</h1>
+            {
+                notes.map(
+                    (note,index)=>(
+                        <Note 
+                        title={note.title} 
+                        key={index} 
+                        content={note.content}  
+                        onClick={()=>{showModal(note.id)}}
+                        />
+                    )
+                )
+            }
         </div>
     )
 }
