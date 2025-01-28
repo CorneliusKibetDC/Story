@@ -26,7 +26,16 @@ const LoggedinHome=()=>{
             .catch(err=>console.log(err))
         },[]
     )
-    
+    const getAllNotes=()=>{
+        fetch('/notes/notes')
+            .then((res) => res.json())
+            .then(data => {
+                setNotes(data)
+                
+            })
+            .catch(err=>console.log(err))
+    }
+
     const closeModal=()=>{
       
         setShow(false)
@@ -84,6 +93,43 @@ const LoggedinHome=()=>{
             console.log('Token not found in localStorage');
         }
     };
+
+    
+    const deleteNote = (id) => {
+        console.log('Deleting note with ID:', id);
+    
+        // Retrieve and parse the token from localStorage
+        let token = localStorage.getItem('REACT_TOKEN_AUTH_KEY');
+        if (token) {
+            // Parse the token and extract the access_token
+            const parsedToken = JSON.parse(token);
+            const accessToken = parsedToken.access_token;
+    
+            // Log the access token (for debugging)
+            console.log('Access Token:', accessToken);
+    
+            // Setup DELETE request options
+            const requestOptions = {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}` // Use the access token
+                }
+            };
+    
+            // Send the DELETE request
+            fetch(`/notes/note/${id}`, requestOptions)
+                .then((res) => res.json()) // Parse the response JSON
+                .then((data) => {
+                    console.log('Deleted note data:', data); 
+                    getAllNotes() // Reload the notes list
+                
+                })
+                .catch((err) => console.log(err)); // Handle errors
+        } else {
+            console.log('Token not found in localStorage');
+        }
+    };
+    
 
 
     return (
@@ -150,6 +196,7 @@ const LoggedinHome=()=>{
                         key={index} 
                         content={note.content}  
                         onClick={()=>{showModal(note.id)}}
+                        onDelete={()=>{deleteNote(note.id)}}
                         />
                     )
                 )
