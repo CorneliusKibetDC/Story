@@ -95,7 +95,7 @@ class HelloResource(Resource):
     def get(self):
         return {"message": "Hello, World!"}
 
-@notes_ns.route('/')
+@notes_ns.route('/notes')
 class NotesResource(Resource):
     @notes_ns.marshal_with(notes_model)
     def get(self):
@@ -114,7 +114,7 @@ class NotesResource(Resource):
             title=data.get("title"),
             content=data.get("content")
         )
-        new_note.save()  # Make sure the Notes model has a save() method
+        new_note.save()  
         return new_note, 201
 
 @notes_ns.route('/note/<int:id>')
