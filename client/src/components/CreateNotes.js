@@ -52,7 +52,7 @@ const CreateNotePage = () => {
                     <Form.Label>Title</Form.Label>
                     <Form.Control
                         type="text"
-                        {...register("title", { required: true, maxLength: 25 })}
+                        {...register("title", { required: true, maxLength: 255 })}
                     />
                 </Form.Group>
                 {errors.title && <p style={{ color: 'red' }}><small>Title is required</small></p>}
@@ -67,13 +67,13 @@ const CreateNotePage = () => {
                     <Form.Control
                         as="textarea"
                         rows={10}
-                        {...register("content", { required: true, maxLength: 300 })}
+                        {...register("content", { required: true, maxLength: 1000 })}
                     />
                 </Form.Group>
                 {errors.content && <p style={{ color: 'red' }}><small>Content is required</small></p>}
                 {errors.content?.type === 'maxLength' && (
                     <p style={{ color: 'red' }}>
-                        <small>Content should be more than 300 characters</small>
+                        <small>Content should be more than 1000 characters</small>
                     </p>
                 )}
 
