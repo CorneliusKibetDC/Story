@@ -1,48 +1,37 @@
-
 import React, { useState } from 'react';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
-import { useAuth,logout } from '../auth';
+import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth, logout } from '../auth';
 
-// Create a component to show links when logged in
 const LoggedInLink = () => {
+  const navigate = useNavigate(); // Hook for programmatic navigation
+
+  const handleLogout = () => {
+    logout(); // Perform logout
+    navigate('/'); // Redirect to home after logout
+  };
+
   return (
     <>
-      <li className="nav-item">
-        <a className="nav-link active" href="#" onClick={()=>{logout()}}>Log Out</a>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" to="/">Home</Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" to="/create_note">Create Notes</Link>
-      </li>
+      <Nav.Link as={Link} to="/" className="text-light">Home</Nav.Link>
+      <Nav.Link as={Link} to="/create_note" className="text-light">Create Notes</Nav.Link>
+      <Nav.Link onClick={handleLogout} className="text-light" style={{ cursor: "pointer" }}>Log Out</Nav.Link>
     </>
   );
 };
 
-// Create a component to show links when logged out
 const LoggedOutLink = () => {
   return (
     <>
-      <li className="nav-item">
-        <Link className="nav-link" to="/signup">Sign Up</Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" to="/">Home</Link>
-      </li>
-      <li className="nav-item">
-        <Link className="nav-link" to="/login">Login</Link>
-      </li>
-     
+      <Nav.Link as={Link} to="/" className="text-light">Home</Nav.Link>
+      <Nav.Link as={Link} to="/signup" className="text-light">Sign Up</Nav.Link>
+      <Nav.Link as={Link} to="/login" className="text-light">Login</Nav.Link>
     </>
   );
 };
 
 const NavBar = () => {
-  const [logged] = useAuth(); // To check if the user is logged in
+  const [logged] = useAuth();
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -51,14 +40,8 @@ const NavBar = () => {
         <Navbar.Brand as={Link} to="/">Notes</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
-          <Nav className="me-auto">
-            {logged ? (
-              // Show LoggedInLink if logged in
-              <LoggedInLink />
-            ) : (
-              // Show LoggedOutLink if not logged in
-              <LoggedOutLink />
-            )}
+          <Nav className="ms-auto">
+            {logged ? <LoggedInLink /> : <LoggedOutLink />}
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -67,5 +50,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-

@@ -1,13 +1,65 @@
 .container{
     margin-top: 50px;
 }
-.heading{
-    font-size: 3em;
+.container.login {
+    background-image: url('/Users/mac/Development/code/phase4/Story/src/resources/notesimage.jpeg'); /* Background image */
+    background-size: cover;  /* Ensures the image covers the entire container */
+    background-repeat: no-repeat; /* Prevents repeating the image */
+    background-attachment: fixed; /* Optional: makes the background image stay fixed */
+    
+    /* background-color: rgba(0, 0, 0, 0.5);  */
+    color: rgb(24, 22, 22); 
+    
+    width: 100vw;   /* Full width of the viewport */
+    height: 100vh;  /* Full height of the viewport */
+    
+    margin: 0;      /* Removes default margin around the container */
+    padding: 0;     /* Removes padding inside the container */
+    
+    box-sizing: border-box; /* Ensures that padding and borders are included in the element's total width/height */
+    
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center;     /* Centers the content vertically */
+    
+    border-radius: 0;  /* No rounded corners */
 }
-.form{
-    margin:auto;
-    width: 80%;
+
+    .heading{
+    font-size: 3em;
+    color: rgb(15, 39, 31);
+    margin-top: 50px;
+}
+.form {
+    background-color: rgba(255, 255, 255, 0.8); /* White background with some transparency */
+    padding: 30px; /* Padding inside the form */
+    border-radius: 10px; /* Rounded corners for the form */
+    width: 100%; /* Takes the full width */
+    max-width: 400px; /* Maximum width for the form */
+    box-sizing: border-box; /* Ensures padding is included in width */
 }
 .note{
     margin-top: 20px;
+}
+.home {
+    background-image: url('/Users/mac/Development/code/phase4/Story/src/resources/notesimage.jpeg'); /* Replace with your image path */
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    
+    width: 100vw; 
+    height: 100vh; 
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    color: white; 
+    overflow: hidden;
+    padding-top: 50px; /* Push content down */
+}
+.btn {
+    margin-top: 20px; /* Space below heading */
 }
