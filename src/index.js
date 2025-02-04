@@ -1,13 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/main.css';
+import './main.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NavBar from './components/Navbar';
+import NavBar from './Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Routes and Route from react-router-dom
-import SignUpPage from './components/SignUp';
-import CreateNotePage from './components/CreateNotes';
-import LoginPage from './components/Login';
-import HomePage from './components/Home';
+import SignUpPage from './SignUp';
+import CreateNotePage from './CreateNotes';
+import LoginPage from './Login';
+import HomePage from './Home';
 
 const App = () => {
   return (

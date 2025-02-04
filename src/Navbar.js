@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth, logout } from '../auth';
+import { useAuth, logout } from './auth';
 
 const LoggedInLink = () => {
   const navigate = useNavigate(); // Hook for programmatic navigation

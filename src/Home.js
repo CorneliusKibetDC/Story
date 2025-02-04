@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from '../auth';
+import { useAuth } from './auth';
 import Note from './Note';
 import {Modal, Form, Button} from 'react-bootstrap';
 import { useForm } from "react-hook-form";
