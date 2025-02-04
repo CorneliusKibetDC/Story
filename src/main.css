@@ -2,7 +2,7 @@
     margin-top: 50px;
 }
 .container.login {
-    background-image: url('/Users/mac/Development/code/phase4/Story/public/notesimage.jpeg'); /* Background image */
+    background-image: url('./notesimage.jpeg'); /* Background image */
     background-size: cover;  /* Ensures the image covers the entire container */
     background-repeat: no-repeat; /* Prevents repeating the image */
     background-attachment: fixed; /* Optional: makes the background image stay fixed */
@@ -42,7 +42,7 @@
     margin-top: 20px;
 }
 .home {
-    background-image: url('//Users/mac/Development/code/phase4/Story/public/notesimage.jpeg'); 
+    background-image: url('./notesimage.jpeg'); 
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat; 
