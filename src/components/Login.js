@@ -19,7 +19,7 @@ const LoginPage = () => {
             body: JSON.stringify(data),
         };
 
-        fetch('/auth/login', requestOptions)
+        fetch('https://backend-1-ogsa.onrender.com/auth/login', requestOptions)
             .then((res) => {
                 if (!res.ok) {
                     throw new Error('Login failed');

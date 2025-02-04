@@ -17,7 +17,7 @@ const LoggedinHome=()=>{
     useEffect(
         ()=>{
 
-            fetch('/notes/notes')
+            fetch('https://backend-1-ogsa.onrender.com/notes/notes')
             .then((res) => res.json())
             .then(data => {
                 setNotes(data)
@@ -27,7 +27,7 @@ const LoggedinHome=()=>{
         },[]
     )
     const getAllNotes=()=>{
-        fetch('/notes/notes')
+        fetch('https://backend-1-ogsa.onrender.com/notes/notes')
             .then((res) => res.json())
             .then(data => {
                 setNotes(data)
@@ -81,7 +81,7 @@ const LoggedinHome=()=>{
             };
     
             // Send the request to update the note
-            fetch(`/notes/note/${noteId}`, requestOptions)
+            fetch(`https://backend-1-ogsa.onrender.com/notes/note/${noteId}`, requestOptions)
                 .then((res) => res.json())
                 .then((data) => {
                     console.log(data);
@@ -117,7 +117,7 @@ const LoggedinHome=()=>{
             };
     
             // Send the DELETE request
-            fetch(`/notes/note/${id}`, requestOptions)
+            fetch(`https://backend-1-ogsa.onrender.com/notes/note/${id}`, requestOptions)
                 .then((res) => res.json()) // Parse the response JSON
                 .then((data) => {
                     console.log('Deleted note data:', data); 

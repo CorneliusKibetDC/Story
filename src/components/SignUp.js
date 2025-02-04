@@ -28,7 +28,7 @@ const SignUpPage = () => {
                 body: JSON.stringify(body)
             }
 
-            fetch('/auth/signup', requestOptions)
+            fetch('https://backend-1-ogsa.onrender.com/auth/signup', requestOptions)
                 .then(res => res.json())
                 .then(data=>{
                     setServerResponse(data.message)
@@ -69,6 +69,7 @@ const SignUpPage = () => {
                 <h1>Sign Up Page</h1>
                }
             
+                
                 <form onSubmit={handleSubmit(submitForm)}>
                     <Form.Group>
                         <Form.Label>Username</Form.Label>

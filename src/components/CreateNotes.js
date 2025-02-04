@@ -32,7 +32,7 @@ const CreateNotePage = () => {
             };
     
             // Send the request to create the note
-            fetch('/notes/notes', requestOptions)
+            fetch('https://backend-1-ogsa.onrender.com/notes/notes', requestOptions)
                 .then((res) => res.json())
                 .then((data) => {
                     reset();  // Reset the form after success
